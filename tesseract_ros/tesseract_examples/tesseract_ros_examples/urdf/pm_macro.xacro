@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="pm" >
+
+  <xacro:include filename="$(find pm_description)/urdf/m20ib25c_macro.xacro"/>
+
+  <xacro:macro name="pm" params="prefix">
+    <xacro:fanuc_m20ib25c prefix="arm_"/>
+  </xacro:macro>
+
+</robot>

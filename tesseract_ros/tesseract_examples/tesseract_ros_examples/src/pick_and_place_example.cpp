@@ -99,13 +99,12 @@ bool PickAndPlaceExample::run()
   sleep(20);
   // Set the initial state of the robot
   std::unordered_map<std::string, double> joint_states;
-  joint_states["iiwa_joint_1"] = 0.0;
-  joint_states["iiwa_joint_2"] = 0.0;
-  joint_states["iiwa_joint_3"] = 0.0;
-  joint_states["iiwa_joint_4"] = -1.57;
-  joint_states["iiwa_joint_5"] = 0.0;
-  joint_states["iiwa_joint_6"] = 0.0;
-  joint_states["iiwa_joint_7"] = 0.0;
+  joint_states["arm_link_1"] = 0.0;
+  joint_states["arm_link_2"] = 0.0;
+  joint_states["arm_link_3"] = 0.0;
+  joint_states["arm_link_4"] = -1.57;
+  joint_states["arm_link_5"] = 0.0;
+  joint_states["arm_link_6"] = 0.0;
   tesseract_->getEnvironment()->setState(joint_states);
 
   // Add simulated box to environment
@@ -149,7 +148,7 @@ bool PickAndPlaceExample::run()
 
   // Choose the manipulator and end effector link
   std::string manip = "Manipulator";
-  std::string end_effector = "iiwa_link_ee";
+  std::string end_effector = "arm_link_6";
 
   // Define the final pose (on top of the box)
   Eigen::Isometry3d final_pose;

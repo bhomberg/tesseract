@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<robot name="robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="pm" xmlns:xacro="http://wiki.ros.org/xacro">
     <!-- Create links -->
     <link name="world"/>
     <link name="base_link"/>
@@ -7,11 +7,11 @@
     <!-- Import Rviz colors -->
     <xacro:include filename="$(find tesseract_ros_examples)/urdf/iiwa7/materials.xacro" />
     <!--Import the lbr iiwa macro -->
-    <xacro:include filename="$(find tesseract_ros_examples)/urdf/iiwa7/iiwa7.xacro"/>
+    <!-- <xacro:include filename="$(find tesseract_ros_examples)/urdf/pm.xacro"/> -->
+    <xacro:include filename="$(find pm_description)/urdf/m20ib25c_macro.xacro"/>
     <!-- Include robot -->
-    <xacro:iiwa7 hardware_interface="PositionJointInterface" robot_name="iiwa" parent="base_link">
-        <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
-    </xacro:iiwa7>
+    <!-- <xacro:pm prefix="arm_"/> -->
+    <xacro:fanuc_m20ib25c prefix="arm_"/>
 
     <!-- Include workcell (creates joint from world to workcell_base)-->
     <xacro:include filename="$(find tesseract_ros_examples)/urdf/environment.xacro"/>
@@ -28,6 +28,12 @@
       <parent link="workcell_base"/>
       <child link="base_link"/>
       <origin xyz="0 -0.0381 0.00953" rpy="0 0 1.5708"/>
+    </joint>
+
+    <joint name="base_link_robot" type="fixed">
+        <parent link="base_link"/>
+        <child link="arm_base_link"/>
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
     </joint>
 
 </robot>
