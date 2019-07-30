@@ -102,13 +102,9 @@ bool PickAndPlaceExample::run()
   joint_states["arm_joint_1"] = 0.0;
   joint_states["arm_joint_2"] = 0.0;
   joint_states["arm_joint_3"] = 0.0;
-  joint_states["arm_joint_4"] = -1.57;
+  joint_states["arm_joint_4"] = 0.0;
   joint_states["arm_joint_5"] = 0.0;
   joint_states["arm_joint_6"] = 0.0;
-  EnvState::ConstPtr state = tesseract_->getEnvironment()->getCurrentState();
-  for ( auto it = state->joints.begin(); it != state->joints.end(); ++it )
-        std::cout << " " << it->first << ":" << it->second;
-  std::cout << std::endl;
   tesseract_->getEnvironment()->setState(joint_states);
 
   // Add simulated box to environment
@@ -339,7 +335,7 @@ bool PickAndPlaceExample::run()
   joint_box2.parent_to_joint_origin_transform.translation() += Eigen::Vector3d(0, 0, box_side / 2.0);
 
   tesseract_->getEnvironment()->moveLink(joint_box2);
-  tesseract_->getEnvironment()->addAllowedCollision(link_box.getName(), "iiwa_link_ee", "Never");
+  tesseract_->getEnvironment()->addAllowedCollision(link_box.getName(), "arm_link_6", "Never");
   tesseract_->getEnvironment()->addAllowedCollision(link_box.getName(), end_effector, "Adjacent");
 
   if (rviz_)
@@ -357,20 +353,9 @@ bool PickAndPlaceExample::run()
   Eigen::Isometry3d retreat_pose = approach_pose;
 
   // Define some place locations.
-  Eigen::Isometry3d bottom_right_shelf, bottom_left_shelf, middle_right_shelf, middle_left_shelf, top_right_shelf,
-      top_left_shelf;
-  bottom_right_shelf.linear() = Eigen::Quaterniond(0, 0, 0.7071068, 0.7071068).matrix();
-  bottom_right_shelf.translation() = Eigen::Vector3d(0.148856, 0.73085, 0.906);
-  bottom_left_shelf.linear() = Eigen::Quaterniond(0, 0, 0.7071068, 0.7071068).matrix();
-  bottom_left_shelf.translation() = Eigen::Vector3d(-0.148856, 0.73085, 0.906);
-  middle_right_shelf.linear() = Eigen::Quaterniond(0, 0, 0.7071068, 0.7071068).matrix();
-  middle_right_shelf.translation() = Eigen::Vector3d(0.148856, 0.73085, 1.16);
+  Eigen::Isometry3d middle_left_shelf;
   middle_left_shelf.linear() = Eigen::Quaterniond(0, 0, 0.7071068, 0.7071068).matrix();
-  middle_left_shelf.translation() = Eigen::Vector3d(-0.148856, 0.73085, 1.16);
-  top_right_shelf.linear() = Eigen::Quaterniond(0, 0, 0.7071068, 0.7071068).matrix();
-  top_right_shelf.translation() = Eigen::Vector3d(0.148856, 0.73085, 1.414);
-  top_left_shelf.linear() = Eigen::Quaterniond(0, 0, 0.7071068, 0.7071068).matrix();
-  top_left_shelf.translation() = Eigen::Vector3d(-0.148856, 0.73085, 1.414);
+  middle_left_shelf.translation() = Eigen::Vector3d(-0.148856, .33085, 1.16);
 
   // Set the target pose to middle_left_shelf
   final_pose = middle_left_shelf;
