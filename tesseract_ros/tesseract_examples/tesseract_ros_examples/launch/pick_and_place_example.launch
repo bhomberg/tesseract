@@ -5,7 +5,7 @@
     <arg name="file_write_cb" default="false" />
     <arg name="box_side" default="0.2"/>
     <arg name="box_x" default="0.15"/>
-    <arg name="box_y" default="0.4"/>
+    <arg name="box_y" default="1.0"/>
     <arg name="box_parent_link" default="workcell_base"/>
     <arg name="rviz" default="true"/>
     <arg name="testing" default="false"/>

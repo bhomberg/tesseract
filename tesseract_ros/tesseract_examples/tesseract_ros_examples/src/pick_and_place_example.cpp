@@ -99,12 +99,16 @@ bool PickAndPlaceExample::run()
   sleep(20);
   // Set the initial state of the robot
   std::unordered_map<std::string, double> joint_states;
-  joint_states["arm_link_1"] = 0.0;
-  joint_states["arm_link_2"] = 0.0;
-  joint_states["arm_link_3"] = 0.0;
-  joint_states["arm_link_4"] = -1.57;
-  joint_states["arm_link_5"] = 0.0;
-  joint_states["arm_link_6"] = 0.0;
+  joint_states["arm_joint_1"] = 0.0;
+  joint_states["arm_joint_2"] = 0.0;
+  joint_states["arm_joint_3"] = 0.0;
+  joint_states["arm_joint_4"] = -1.57;
+  joint_states["arm_joint_5"] = 0.0;
+  joint_states["arm_joint_6"] = 0.0;
+  EnvState::ConstPtr state = tesseract_->getEnvironment()->getCurrentState();
+  for ( auto it = state->joints.begin(); it != state->joints.end(); ++it )
+        std::cout << " " << it->first << ":" << it->second;
+  std::cout << std::endl;
   tesseract_->getEnvironment()->setState(joint_states);
 
   // Add simulated box to environment
@@ -148,7 +152,7 @@ bool PickAndPlaceExample::run()
 
   // Choose the manipulator and end effector link
   std::string manip = "Manipulator";
-  std::string end_effector = "arm_link_6";
+  std::string end_effector = "arm_tool0";
 
   // Define the final pose (on top of the box)
   Eigen::Isometry3d final_pose;
@@ -194,8 +198,8 @@ bool PickAndPlaceExample::run()
   if (true)
   {
     std::shared_ptr<trajopt::JointVelTermInfo> jv(new trajopt::JointVelTermInfo);
-    jv->targets = std::vector<double>(7, 0.0);
-    jv->coeffs = std::vector<double>(7, 5.0);
+    jv->targets = std::vector<double>(6, 0.0);
+    jv->coeffs = std::vector<double>(6, 5.0);
     jv->term_type = trajopt::TT_COST;
     jv->first_step = 0;
     jv->last_step = pci.basic_info.n_steps - 1;
@@ -409,8 +413,8 @@ bool PickAndPlaceExample::run()
   if (true)
   {
     std::shared_ptr<trajopt::JointVelTermInfo> jv(new trajopt::JointVelTermInfo);
-    jv->targets = std::vector<double>(7, 0.0);
-    jv->coeffs = std::vector<double>(7, 5.0);
+    jv->targets = std::vector<double>(6, 0.0);
+    jv->coeffs = std::vector<double>(6, 5.0);
     jv->term_type = trajopt::TT_COST;
     jv->first_step = 0;
     jv->last_step = pci_place.basic_info.n_steps - 1;
