@@ -336,6 +336,7 @@ bool PickAndPlaceExample::run()
 
   tesseract_->getEnvironment()->moveLink(joint_box2);
   tesseract_->getEnvironment()->addAllowedCollision(link_box.getName(), "arm_link_6", "Never");
+  tesseract_->getEnvironment()->addAllowedCollision(link_box.getName(), "arm_flange", "Never");
   tesseract_->getEnvironment()->addAllowedCollision(link_box.getName(), end_effector, "Adjacent");
 
   if (rviz_)
@@ -354,8 +355,10 @@ bool PickAndPlaceExample::run()
 
   // Define some place locations.
   Eigen::Isometry3d middle_left_shelf;
-  middle_left_shelf.linear() = Eigen::Quaterniond(0, 0, 0.7071068, 0.7071068).matrix();
-  middle_left_shelf.translation() = Eigen::Vector3d(-0.148856, .33085, 1.16);
+  //middle_left_shelf.linear() = Eigen::Quaterniond(0, 0, 0.7071068, 0.7071068).matrix();
+  middle_left_shelf.linear() = Eigen::Quaterniond(1.0, 0, 0, 0).matrix();
+  //middle_left_shelf.translation() = Eigen::Vector3d(-0.148856, .73085, 1.16);
+  middle_left_shelf.translation() = Eigen::Vector3d(box_x, box_y, box_side + 0.77153);
 
   // Set the target pose to middle_left_shelf
   final_pose = middle_left_shelf;
